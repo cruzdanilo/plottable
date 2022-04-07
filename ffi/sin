@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+angle=$(cast --abi-decode "_()(uint256)" "$1")
+
+sin=$(bc -l <<< "
+  scale = 18
+  sin = s($angle / 1000000000000000000 % (2 * 3141592653589793238))
+
+  scale = 0
+  print sin * 1000000000000000000 / 1
+")
+
+cast --to-int256 -- "$sin" | tr -d '\n'
