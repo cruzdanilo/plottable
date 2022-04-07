@@ -1,0 +1,20 @@
+{
+  "name": "@cruzdanilo/plottable",
+  "version": "0.0.1",
+  "license": "AGPL-3.0-or-later",
+  "repository": "cruzdanilo/plottable",
+  "author": "danilo neves cruz <cruzdanilo@gmail.com>",
+  "scripts": {
+    "lint": "run-s --continue-on-error lint:**",
+    "lint:solhint": "solhint 'src/**/*.sol'",
+    "lint:slither": "slither src --solc-remaps \"$(xargs < remappings.txt)\"",
+    "test": "forge test --ffi"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5"
+  }
+}

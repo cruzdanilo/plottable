@@ -1,0 +1,34 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SOLC_VERSION: 0.8.13
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3
+          cache: pip
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+          cache-dependency-path: package.json
+
+      - run: export FOUNDRY_DIR=$HOME/.local && curl -L https://foundry.paradigm.xyz | bash && foundryup
+      - run: pip install -r requirements.txt
+      - run: solc-select install $SOLC_VERSION && solc-select use $SOLC_VERSION
+      - run: npm install
+
+      - run: npm run lint
+      - run: npm test
